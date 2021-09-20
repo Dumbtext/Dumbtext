@@ -1,0 +1,64 @@
+
+#include <RH_ASK.h>
+#include <SPI.h> // Not actually used but needed to compile
+#include <Servo.h>
+int button=0;
+
+Servo myservo;
+int pos=0;
+boolean dooropen= false;
+int motor=3;
+RH_ASK driver(2000, 4, 3, 5); 
+int buttonPin=6;
+
+void setup()
+{
+    Serial.begin(115200);	  // Debugging only
+    Serial.println("working");
+    if (!driver.init())
+         Serial.println("init failed");
+    myservo.attach(8);
+    pinMode(motor,OUTPUT);
+    pinMode(buttonPin,INPUT);
+
+}
+
+void loop()
+{
+
+    button=digitalRead(buttonPin);
+    uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
+    uint8_t buflen = sizeof(buf);
+
+    if (driver.recv(buf, &buflen)) // Non-blocking
+    {
+	//int i;
+
+	// Message with a good checksum received, dump it.
+	    driver.printBuffer("Got:", buf, buflen);
+
+      String rcv;
+      for(int i =0; i<buflen; i++) {
+        rcv += (char)buf[i];
+      }
+      Serial.println(rcv);
+      if(rcv=="run"){
+        dooropen=true;
+      }
+      while(dooropen){
+        
+        // set servo to pos
+        myservo.write(90);
+        //run motor
+        analogWrite(motor,255);
+        // if switch is pressed stop motor and lift servo
+        if(button==HIGH){
+          myservo.write(0);
+          analogWrite(motor,0);
+          dooropen=false;
+        }
+        
+        
+      }
+    }
+}
