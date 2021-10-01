@@ -1,0 +1,29 @@
+
+
+#include <RH_ASK.h>
+#include <SPI.h> // Not actually used but needed to compile
+int buttonPin= 5;
+int button = 0;
+
+RH_ASK driver(2000, 4, 2, 5); // ESP8266 or ESP32: do not use pin 11 or 2
+
+void setup()
+{
+    Serial.begin(115200);	  // Debugging only
+    if (!driver.init())
+         Serial.println("init failed");
+    pinMode(buttonPin, INPUT);
+    
+}
+
+void loop()
+{
+    button = digitalRead(buttonPin);
+    const char *msg = "run";
+    // if button is on
+    if(button==HIGH){
+    driver.send((uint8_t *)msg, strlen(msg));
+    driver.waitPacketSent();
+    delay(200);
+    }
+}
