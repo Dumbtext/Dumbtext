@@ -33,11 +33,8 @@ void loop()
     uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
     uint8_t buflen = sizeof(buf);
  
-    if (driver.recv(buf, &buflen)) // Non-blocking
-    {
-	//int i;
-
-	// Message with a good checksum received, dump it.
+    if(driver.recv(buf, &buflen)) {
+	 int i;
 	    driver.printBuffer("Got:", buf, buflen);
 
       String rcv;
@@ -47,24 +44,26 @@ void loop()
       }
       
       if(rcv=="run"){
-        myservo.write(180);
+        Serial.println("Should be running");
+        myservo.write(120);
         analogWrite(motor,255);
         dooropen=true;
        
        }else{
         ;
        }
-      while(dooropen){
+        
+     }
+     while(dooropen){
         
         button=digitalRead(buttonPin);
         // if switch is pressed stop motor and lift servo
         if(button==HIGH){
+          Serial.print("button is high");
           myservo.write(0);
           analogWrite(motor,0);
           dooropen=false;
         }
-        
-        
-      }
-    }
+     }
+    
 }
