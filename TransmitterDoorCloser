@@ -22,8 +22,10 @@ void loop()
     const char *msg = "run";
     // if button is on
     if(button==HIGH){
-    driver.send((uint8_t *)msg, strlen(msg));
-    driver.waitPacketSent();
-    delay(200);
+      driver.send((uint8_t *)msg, strlen(msg));
+      driver.waitPacketSent();
+      Serial.print(msg);
+      //Serial.println(analogRead(buttonPin));
+      delay(200);
     }
 }
