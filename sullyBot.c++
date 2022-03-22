@@ -29,7 +29,7 @@ void setup() {
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
+    ; 
   }
 
  
@@ -51,7 +51,7 @@ void setup() {
 
     status = WiFi.begin(ssid, pass);
 
-    // wait 10 seconds for connection:
+    
     delay(10000);
   }
   server.begin();
@@ -61,11 +61,11 @@ void setup() {
 
 
 void loop() {
-  // listen for incoming clients
+ 
   WiFiClient client = server.available();
   if (client) {
     Serial.println("new client");
-    // an HTTP request ends with a blank line
+    
     boolean currentLineIsBlank = true;
     while (client.connected()) {
       if (client.available()) {
@@ -81,7 +81,7 @@ void loop() {
           client.println("Connection: close");  // the connection will be closed after completion of the response
           client.println("Refresh: 5");  // refresh the page automatically every 5 sec
           client.println();
-          //client.println("<!DOCTYPE html>");
+          client.println("<!DOCTYPE html>");
           client.println("<html lang=\"en\">");
           client.println("<head>");
           client.println("<meta charset=\"UTF-8\" />");
