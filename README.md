@@ -7,5 +7,4 @@
 <!---
 Dumbtext/Dumbtext is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
---->
-This is for the Sully Bot basically it's a two part robot that shines a laser around the room from the ceiling and activates a shake bot to entice play and general good time for my furry friend.
+--I like to make stuff
